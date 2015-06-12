@@ -7,3 +7,6 @@ and rebuild using "cabal build".
 I have just used this exercise to learn Haskell. Might make it more generic
 later on.
 
+sunrise-equation.cws is a Cantor/Octave worksheet I used to learn the algorithm
+before implementing in Haskell.
+
