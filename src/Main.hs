@@ -8,7 +8,6 @@ https://en.wikipedia.org/wiki/Julian_day#Converting_Julian_or_Gregorian_calendar
 module Main where
 
 import qualified Data.Time as DT
-import qualified Debug.Trace as T
 import Text.Printf
 
 
@@ -41,8 +40,6 @@ solarDiscDiameterOnEarth = 0.83
 main = do
   now <- DT.getCurrentTime
   let (raise, set, dayLen) = calculateSun place now
-  raiseZoned <- DT.utcToLocalZonedTime raise
-  setZoned <- DT.utcToLocalZonedTime set
   putStrLn $ "Sun raises today at " ++ (format raise)
                ++ " and sets at " ++ (format set) ++ ". The day is "
                ++ printf "%.2f" dayLen ++ " hours long."
