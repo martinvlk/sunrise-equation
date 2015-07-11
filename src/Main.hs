@@ -40,8 +40,8 @@ solarDiscDiameterOnEarth = 0.83
 main = do
   now <- DT.getCurrentTime
   let (raise, set, dayLen) = calculateSun place now
-  putStrLn $ "Sun raises today at " ++ (format raise)
-               ++ " and sets at " ++ (format set) ++ ". The day is "
+  putStrLn $ "Sun raises today at " ++ format raise
+               ++ " and sets at " ++ format set ++ ". The day is "
                ++ printf "%.2f" dayLen ++ " hours long."
     where format = DT.formatTime DT.defaultTimeLocale "%H:%M"
 
@@ -158,7 +158,7 @@ sunDeclination now lon = (unrad.asin) ((sin.rad) (sunEclipticalLongitude now lon
 
 -- 
 hourAngle :: DT.Day -> Location -> Double
-hourAngle now (lon, (Latitude ln)) = (unrad.acos.rad)
+hourAngle now (lon, Latitude ln) = (unrad.acos.rad)
                       (((sin.rad) (-solarDiscDiameterOnEarth) - (sin.rad) ln * (sin.rad) decl)
                        / rad ((cos.rad) ln * (cos.rad) decl))
   where decl = sunDeclination now lon
@@ -167,6 +167,6 @@ hourAngle now (lon, (Latitude ln)) = (unrad.acos.rad)
 julianDateOfSolarNoon'' :: DT.Day -> Location -> Double
 julianDateOfSolarNoon'' now loc@(lon@(Longitude lw), _) =
     julianJan1st2000 + sunTransitTime
-    + (((hourAngle now loc) + lw) / fullCircle)
+    + ((hourAngle now loc + lw) / fullCircle)
     + fromInteger (julianCycle now lon)
 
